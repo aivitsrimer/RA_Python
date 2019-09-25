@@ -6,6 +6,7 @@ from pathlib import Path
 class FileInfo(object):
     name: str
     size: int
+    content: str
 
 
 class FileFilter(object):
@@ -17,7 +18,7 @@ class FileFilter(object):
         for folder in path.iterdir():
             if folder.is_dir() and folder.name.startswith(self._folder_prefix):
                 yield from (
-                    FileInfo(str(f.absolute()), f.stat().st_size)
+                    FileInfo(str(f.absolute()), f.stat().st_size, f.open('r').read())
                     for f in folder.iterdir()
                     if f.is_file() and f.suffix == f'.{self._file_extension}'
                 )
