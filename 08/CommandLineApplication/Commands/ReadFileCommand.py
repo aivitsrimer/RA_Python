@@ -1,3 +1,4 @@
+import os
 import re
 import sys
 
@@ -20,7 +21,7 @@ class ReadFileCommand(AbstractCommand):
         self._match = re.search(rf'^{self.name} (.*)$', command)
         return bool(self._match)
 
-    async def execute(self):
+    def execute(self):
         filename = self._match.group(1)
 
         with open(filename, 'rb') as f:
